@@ -25,4 +25,19 @@ public final class CustomUtils<T extends Comparable<T>> {
      */
     return Arrays.copyOf(arr, getNextResize(arr));
   }
+
+  public static <T> String arrToString(T arr[], int endIndex) {
+    String returnString = "[";
+    for (int i = 0; i <= endIndex; i++) {
+      if (i != 0) {
+        returnString = returnString.concat(" ");
+      }
+      returnString = returnString.concat(arr[i] == null ? "null" : arr[i].toString());
+      if (i != endIndex) {
+        returnString = returnString.concat(",");
+      }
+    }
+    returnString = returnString.concat("]");
+    return returnString;
+  }
 }
