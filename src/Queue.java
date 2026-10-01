@@ -68,7 +68,21 @@ class Queue<T extends Comparable<T>> {
   }
 
   public String toString() {
-    return CustomUtils.arrToString(arr, arr.length - 1);
+    // we'll actually do something different
+    String returnString = "[";
+    int ptr = queueTail;
+    for (int i = 0; i < occupied; i++) {
+      if (i != 0) {
+        returnString = returnString.concat(" ");
+      }
+      returnString = returnString.concat(arr[ptr] == null ? "null" : arr[ptr].toString());
+      if (i != occupied - 1) {
+        returnString = returnString.concat(",");
+      }
+      ptr = (ptr + 1) % arr.length;
+    }
+    returnString = returnString.concat("]");
+    return returnString;
   }
 
   public void display() {
