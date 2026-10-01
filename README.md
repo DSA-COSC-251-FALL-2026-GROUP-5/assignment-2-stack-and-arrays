@@ -29,35 +29,35 @@ the method should return null.
 
 5. Each required method must include a short comment stating its time complexity.
 
-6. Stack Class (LIFO) Implement the following constructor and methods:
+~~6. Stack Class (LIFO) Implement the following constructor and methods:~~
 
-(a) public Stack(int arraySize)
+~~(a) public Stack(int arraySize)~~
 
-(b) public void push(T newItem)
+~~(b) public void push(T newItem)~~
 
-(c) public T pop()
+~~(c) public T pop()~~
 
-(d) public T peek()
+~~(d) public T peek()~~
 
-(e) public String toString()
+~~(e) public String toString()~~
 
-(f) public void display()
+~~(f) public void display()~~
 
 7. Queue Class (FIFO) Implement the following constructor and methods:
 
-(a) public Queue(int arraySize)
+~~(a) public Queue(int arraySize)~~
 
-(b) public void insert(T newItem)
+~~(b) public void insert(T newItem)~~
 
-(c) public T remove()
+~~(c) public T remove()~~
 
-(d) public T peekFront()
+~~(d) public T peekFront()~~
 
-(e) public T peekRear()
+~~(e) public T peekRear()~~
 
-(f) public String toString()
+~~(f) public String toString()~~
 
-(g) public void display()
+~~(g) public void display()~~
 
 The Queue class may be implemented using a circular array or by shifting elements after removal.
 
@@ -68,7 +68,7 @@ Items must be removed based on priority.
 
 Implement the following constructor and methods:
 
-(a) public PriorityQueue(int arraySize)
+~~(a) public PriorityQueue(int arraySize)~~
 
 (b) public void insert(T newItem, int priorityValue)
 

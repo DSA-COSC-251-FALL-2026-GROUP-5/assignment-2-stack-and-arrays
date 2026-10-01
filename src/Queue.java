@@ -68,7 +68,8 @@ class Queue<T extends Comparable<T>> {
   }
 
   public String toString() {
-    // we'll actually do something different
+    // 7.f. to string loops through every index of the array, as such it takes O(n)
+    // time
     String returnString = "[";
     int ptr = queueTail;
     for (int i = 0; i < occupied; i++) {
@@ -86,6 +87,8 @@ class Queue<T extends Comparable<T>> {
   }
 
   public void display() {
+    // 7.g. display calls toString which takes O(n) time, therefore, it's O(n) since
+    // the other prints takes place in relatively constant time
     System.out.printf("Current Queue: %s\r\n", toString());
     System.out.printf("queueHead: %d\r\n", queueHead);
     System.out.printf("queueTail: %d\r\n", queueTail);
