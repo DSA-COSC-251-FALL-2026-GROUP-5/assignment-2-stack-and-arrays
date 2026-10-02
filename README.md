@@ -98,4 +98,35 @@ Create a utility class that uses your Stack implementation and contains the foll
 This method validates the delimiters in a string and returns true if all delimiters match correctly.
 Otherwise, it should return false. It should only handle the following delimiters: (), [], and {}.
 
+# Notes
 
+## Heaps
+
+Heaps are binary trees that preserve the following invariants:
+
+If we for a min-heap:
+
+- the children of the parent must be of a value smaller than or equal to the parent
+
+Similarly, for a max heap:
+
+- the children of the parent must be of a value greater than or equal to the parent
+
+Let's just talk about the min-heap, and then we can transfer that to the max-heap.
+
+Let's also conceptually visualize it as a binary tree first, before implementing it as an array.
+
+Suppose that we have an array. In order to turn it into a min-heap, we must perform an operation called "heapify" which goes like this:
+
+- pop each one of the elements in the array one by one
+- perform an insertion operation on each of those elements in the heap
+
+Now that we've broken it down into a smaller operation called an insertion, we must talk about how to implement it.
+
+To insert, we place the new element at the bottom-most, left-most open spot of the heap, and then perform something called percolate up.
+
+Essentially, to do this, we compare whether the thing we've inserted is less than the parent, if yes, then we swap the parent and the child, and we continue this process until it's equals to or greater than the parent.
+
+This essentially takes $O(log(n))$ time because, our heap is always balanced.
+
+Now, if we want to pop the root element (which is guaranteed to be the minimum value of the whole structure), we swap the root element with the last element in the heap (if we're talking in the order to of top to down, left to right), and then we can safely pick out that minimum value. Next, we must now repair the invariant through what is essentially the reverse of the "percolate up" step, which means, we take teh root, and if it's bigger than one of the child, swap them, otherwise, do nothing and exit because the invariant is met.
