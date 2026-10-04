@@ -46,6 +46,16 @@ class Queue<T extends Comparable<T>> {
 
   public T peekFront() {
     // 7.d this takes O(1) because it's just indexing an array
+    if (occupied == 0) {
+      return null;
+    }
+    // queueTail already contains the next index to pop so we can just return that
+    return arr[queueTail];
+
+  }
+
+  public T peekRear() {
+    // 7.e this takes O(1) also because it's just indexing an array
 
     if (occupied == 0) {
       return null;
@@ -55,16 +65,7 @@ class Queue<T extends Comparable<T>> {
     // must get the index one less than it
     int frontIndex = (queueHead - 1) % arr.length;
     return arr[frontIndex];
-  }
 
-  public T peekRear() {
-    // 7.e this takes O(1) also because it's just indexing an array
-
-    if (occupied == 0) {
-      return null;
-    }
-    // queueTail already contains the next index to pop so we can just return that
-    return arr[queueTail];
   }
 
   public String toString() {

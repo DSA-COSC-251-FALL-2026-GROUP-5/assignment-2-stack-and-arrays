@@ -53,7 +53,12 @@ class PriorityQueue<T extends Comparable<T>> {
   }
 
   public void insert(T newItem, int priorityValue) {
-    // we assume that the array is already a heap
+    // 8.b. insertion takes O(log(n)) time because although we're inserting into 2
+    // heaps, O(2 log(n)) = O(log(n)). The reason why insertion into heaps cost
+    // O(log(n)) time is because percolate up will swap at most d or so times where
+    // d is the depth of the binary tree and d = log(n) as such, it takes O(d) =
+    // O(log n)
+
     if (occupied == maxHeap.length) {
       // ... assume that min heap and max heap has the same length, so just check one
       // of them if they're overflowing
@@ -91,18 +96,100 @@ class PriorityQueue<T extends Comparable<T>> {
     }
   }
 
-  /*
-   * public T remove() {
-   * // NOTE: if we want to remove in O(log n) time, and if we assume that we will
-   * // always be removing the element that's of smallest priority, we need to
-   * keep
-   * // track of the index of the value of the smallest priority so that we can
-   * // immediately know what to remove for the maxHeap
-   * }
-   */
+  public T remove() {
+    // 8.c removal takes O(log n) time because an arbitrary removal from a heap
+    // takes O(log(n)) time as long as you know the index you want to remove from
+    // beforehand
+    // NOTE: if we want to remove in O(log n) time, and if we only want to remove
+    // the item with the smallest priority, we need to know where that is stored in
+    // the max heap too
+    // to do this, we store a cross reference pointer from one heap to the other
+    // heap
 
-  public void siftDown(Entry<T>[] heap, int sign) {
+    // the first step is to simply store the return value as the first item in the
+    // minHeap
 
+    if (occupied == 0) {
+      return null;
+    }
+
+    Entry<T> entryToRemove = minHeap[0];
+
+    // here comes the hard part. Essentially, for the minHeap, we take the last
+    // element just perform a siftDown from the root after
+    minHeap[0] = minHeap[occupied - 1];
+    maxHeap[minHeap[0].indexInOtherHeap].indexInOtherHeap = 0;
+    minHeap[occupied - 1] = null;
+    occupied--; // we subtract beforehand because we assume that siftDown will probably use it
+                // as a stop condition
+    siftDown(minHeap, maxHeap, minHeapComapreSign, 0);
+    // however, now we need to syncrhonize it with the maxHeap. We can delete an
+    // arbitrary element in a heap in O(log n) time as long as you know the index of
+    // what to delete beforehand.
+
+    int deletionIndexMaxHeap = entryToRemove.indexInOtherHeap;
+    maxHeap[deletionIndexMaxHeap] = maxHeap[occupied];
+    minHeap[maxHeap[deletionIndexMaxHeap].indexInOtherHeap].indexInOtherHeap = deletionIndexMaxHeap;
+    maxHeap[occupied] = null;
+    // now we check whether we should siftDown or percolateUp from here
+
+    if (occupied <= 1) {
+      return entryToRemove.item;
+    }
+
+    // now we need to repair the invariant on the maxHeap
+    int parentPtr = (deletionIndexMaxHeap - 1) / 2;
+    if (maxHeapCompareSign
+        * Integer.compare(maxHeap[parentPtr].priorityValue, maxHeap[deletionIndexMaxHeap].priorityValue) < 0) {
+      // if the element of the parent is less than the element we swapped, then we
+      // need to
+      // percolateUp because, if we assume that the heap was valid before the swap,
+      // then what we currently have is greater than the siblings and everything below
+      // it
+      percolateUp(maxHeap, minHeap, maxHeapCompareSign, deletionIndexMaxHeap);
+    } else {
+      // if the element of the parent is greater or equals to it, then maybe siftDown,
+      // just in case that its children is bigger than it
+      siftDown(maxHeap, minHeap, maxHeapCompareSign, deletionIndexMaxHeap);
+    }
+    return entryToRemove.item;
+  }
+
+  public void siftDown(Entry<T>[] heap, Entry<T>[] otherHeap, int sign, int ptr) {
+    // without loss of generally, assume that we have a maxHeap with positive sign
+    // to reason about this
+    // we stop when our leftChildPtr is greater than or equals to occupied
+    while (true) {
+      // so if this is a max heap, we want the bigger value in order to swap
+      int leftChildPtr = 2 * ptr + 1;
+
+      if (leftChildPtr >= occupied) {
+        break;
+      }
+
+      int childToSwapPtr;
+      if (leftChildPtr + 1 >= occupied) {
+        childToSwapPtr = leftChildPtr;
+      } else if (sign * Integer.compare(heap[leftChildPtr].priorityValue, heap[leftChildPtr + 1].priorityValue) > 0) {
+        childToSwapPtr = leftChildPtr;
+      } else {
+        childToSwapPtr = leftChildPtr + 1;
+      }
+
+      if (sign * Integer.compare(heap[ptr].priorityValue, heap[childToSwapPtr].priorityValue) >= 0) {
+        // if what we have as parent is bigger than or equals to the biggest of our
+        // children, we're done
+        break;
+      }
+
+      // otherwise, we're going to need to swap it
+
+      // we'll first update cross-reference in the otherHeap
+      otherHeap[heap[childToSwapPtr].indexInOtherHeap].indexInOtherHeap = ptr;
+      otherHeap[heap[ptr].indexInOtherHeap].indexInOtherHeap = childToSwapPtr;
+      swap(heap, childToSwapPtr, ptr);
+      ptr = childToSwapPtr;
+    }
   }
 
   public void swap(Entry<T>[] arr, int ptr1, int ptr2) {
@@ -111,7 +198,30 @@ class PriorityQueue<T extends Comparable<T>> {
     arr[ptr2] = tmp;
   }
 
+  public T peekFront() {
+    // 8.d. this takes O(1) time because it's accessing an array through an index
+    // one time
+    // NOTE: assume that the front of the queue is the first thing we will pop
+    if (occupied == 0) {
+      return null;
+    }
+    return minHeap[0].item;
+  }
+
+  public T peekRear() {
+    // 8.e. this also takes O(1) time similar to peekFront
+
+    if (occupied == 0) {
+      return null;
+    }
+
+    return maxHeap[0].item;
+  }
+
   public String toString() {
+    // 8.f. this takes O(n) time because it needs to loop through every element in
+    // the
+    // heap
     return String.format(
         "max heap: %s\r\nmin heap: %s\r\n",
         CustomUtils.arrToString(maxHeap, occupied - 1),
@@ -119,6 +229,7 @@ class PriorityQueue<T extends Comparable<T>> {
   }
 
   public void display() {
+    // 8.g. this takes O(n) time because to string takes O(n) time
     System.out.println(toString());
   }
 
