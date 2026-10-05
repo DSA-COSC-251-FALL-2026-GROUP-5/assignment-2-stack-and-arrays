@@ -227,6 +227,5 @@ Since we don't have to build a heap from scratch, we do not need to implement a 
 
 - AI was used to plan out the data structure
 - AI wasn't used to write any of the code
-- AI was used to generate some tests, whose session can be found [here in opencode_session.md](./opencode_session.md)
-
+- AI was used to generate some tests using `OpenCode`, whose session can be found [here in opencode_session.md](./opencode_session.md)
 
