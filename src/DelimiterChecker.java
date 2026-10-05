@@ -1,6 +1,10 @@
 
 class DelimiterChecker {
   public static boolean check(String input) {
+    // 10.a. this takes O(n) time where n is the size of the array because we
+    // essentially loop through the array once and decide whether to push or to pop
+    // from our stack every time
+
     // create a stack of size 5 for now and trust that resizing works
     Stack<Character> delimiterStack = new Stack<Character>(5);
     for (int i = 0; i < input.length(); i++) {
