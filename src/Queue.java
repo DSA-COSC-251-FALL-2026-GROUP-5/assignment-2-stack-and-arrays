@@ -25,7 +25,7 @@ class Queue<T extends Comparable<T>> {
     // so by convention, queueHead is already pointing at the next index we need to
     // insert
     arr[queueHead] = newItem;
-    queueHead = (queueHead + 1) % arr.length;
+    queueHead = (queueHead + 1 + arr.length) % arr.length;
     occupied++;
     // everytime we insert, we keep track of occupied to make the logic a bit easier
   }
@@ -39,7 +39,7 @@ class Queue<T extends Comparable<T>> {
     }
     T toPop = arr[queueTail];
     arr[queueTail] = null;
-    queueTail = (queueTail + 1) % arr.length;
+    queueTail = (queueTail + 1 + arr.length) % arr.length;
     occupied--;
     return toPop;
   }
@@ -63,7 +63,9 @@ class Queue<T extends Comparable<T>> {
 
     // the queueHead contains the next index to insert, as such, to peekFront, we
     // must get the index one less than it
-    int frontIndex = (queueHead - 1) % arr.length;
+    // we add an arr.length because the modulo sometimes is negative for some reason
+    // in java, so we'll be constantly positive
+    int frontIndex = (queueHead - 1 + arr.length) % arr.length;
     return arr[frontIndex];
 
   }
@@ -81,7 +83,7 @@ class Queue<T extends Comparable<T>> {
       if (i != occupied - 1) {
         returnString = returnString.concat(",");
       }
-      ptr = (ptr + 1) % arr.length;
+      ptr = (ptr + 1 + arr.length) % arr.length;
     }
     returnString = returnString.concat("]");
     return returnString;
@@ -105,7 +107,7 @@ class Queue<T extends Comparable<T>> {
     // make occupied be the source of truth of how big our queue is
     for (int i = 0; i < occupied; i++) {
       newArr[i] = arr[ptr];
-      ptr = (ptr + 1) % arr.length;
+      ptr = (ptr + 1 + arr.length) % arr.length;
     }
 
     arr = newArr;

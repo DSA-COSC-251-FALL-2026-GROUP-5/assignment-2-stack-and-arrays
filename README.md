@@ -223,5 +223,10 @@ In order to avoid repetition, let's plan out what we need to do:
 Since we don't have to build a heap from scratch, we do not need to implement a method to build a max heap in O(n) time, we can just implement insertion similar to how we don't need to sort an array if we just insert it such that it's sorted.
 
 
+# AI usage
+
+- AI was used to plan out the data structure
+- AI wasn't used to write any of the code
+- AI was used to generate some tests, whose session can be found [here in opencode_session.md](./opencode_session.md)
 
 
