@@ -12,7 +12,7 @@ class PriorityQueue<T extends Comparable<T>> {
    * - peekFront can be done in O(1) time (just like an ordered array)
    * - peekRear can be done in O(1) time (just like an ordered array)
    * - deletion is probably O(n), although, it could be done in O(log n) time if
-   * we take note of the smallest element when insertion
+   * know the index to delete beforehand
    *
    * So in terms of time-complexity, we profit in terms of insertion (because
    * shifting takes O(n) time)
