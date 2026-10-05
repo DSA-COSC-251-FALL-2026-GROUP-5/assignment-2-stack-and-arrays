@@ -128,9 +128,18 @@ class PriorityQueue<T extends Comparable<T>> {
     // what to delete beforehand.
 
     int deletionIndexMaxHeap = entryToRemove.indexInOtherHeap;
+
+    if (deletionIndexMaxHeap == occupied) {
+      // because if we've just deleted the end of the heap, there is no need to
+      // percolate up or sift down, just delete it
+      maxHeap[occupied] = null;
+      return entryToRemove.item;
+    }
+
     maxHeap[deletionIndexMaxHeap] = maxHeap[occupied];
     minHeap[maxHeap[deletionIndexMaxHeap].indexInOtherHeap].indexInOtherHeap = deletionIndexMaxHeap;
     maxHeap[occupied] = null;
+
     // now we check whether we should siftDown or percolateUp from here
 
     if (occupied <= 1) {
@@ -230,7 +239,9 @@ class PriorityQueue<T extends Comparable<T>> {
 
   public void display() {
     // 8.g. this takes O(n) time because to string takes O(n) time
-    System.out.println(toString());
+    System.out.print(toString());
+    System.out.printf("peekFront: %s\r\n", peekFront());
+    System.out.printf("peekRear: %s\r\n", peekRear());
   }
 
 }
