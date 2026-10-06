@@ -1,3 +1,4 @@
+// more information can be found on github https://github.com/DSA-COSC-251-FALL-2026-GROUP-5/assignment-2-stack-and-arrays
 class Stack<T extends Comparable<T>> {
   // this array is only internally used
   private T arr[];

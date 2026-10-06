@@ -1,3 +1,4 @@
+// more information can be found on github https://github.com/DSA-COSC-251-FALL-2026-GROUP-5/assignment-2-stack-and-arrays
 class PriorityQueue<T extends Comparable<T>> {
 
   // popPtr by convention contains the next index to pop out of our stack

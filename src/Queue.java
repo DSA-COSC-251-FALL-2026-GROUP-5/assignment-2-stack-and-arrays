@@ -1,3 +1,4 @@
+// more information can be found on github https://github.com/DSA-COSC-251-FALL-2026-GROUP-5/assignment-2-stack-and-arrays
 class Queue<T extends Comparable<T>> {
   private T arr[];
   // by convention, state that queueHead is the next index to push to
